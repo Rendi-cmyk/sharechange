@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Find your dream home with SC. Explore our latest collection of homes tailored for you.">
+    <title>Rumah</title>
+    <link rel="stylesheet" href="Beranda_Awal.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="container">
+                <h1>SC🤍</h1>
+                <div class="hamburger" id="hamburger">
+                    &#9776; <!-- Hamburger icon -->
+                </div>
+                <ul id="nav-links">
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="Beranda.html">Rumah</a></li>
+                    <li><a href="Tentang Kami.html">Tentang Kami</a></li>
+                    <li><a href="kontak kami.html">Kontak</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Temukan Rumah Impian Anda Hanya Di SC</h2>
+                <p>Berbagai koleksi Rumah terbaru hanya untuk Anda.</p>
+                <a href="Search bar2.html" class="cta-button">Jelajahi Sekarang</a>
+            </div>
+        </section>
+        <section class="products">
+            <div class="container">
+                <h2>Rumah Terbaru</h2>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <img src="House 12.jpg" alt="Classic house exterior">
+                        <h3>Rumah Clasic</h3>
+                        <p>Rumah dengan tema clasic.</p>
+                        <a href="SELENGKAPNYA 2.html" class="buy-button">Selengkapnya</a>
+                    </div>
+                    <div class="product-card">
+                        <img src="House 5.jpg" alt="Simple house design">
+                        <h3>Rumah Sederhana</h3>
+                        <p>Rumah dengan tema Sederhana.</p>
+                        <a href="se7.html" class="buy-button">Selengkapnya</a>
+                    </div>
+                    <div class="product-card">
+                        <img src="rumah 4.jpg" alt="Modern house architecture">
+                        <h3>Rumah Tema Jepang</h3>
+                        <p>Rumah dengan tema Jepang</p>
+                        <a href="SELENGKAPNYA 3.html" class="buy-button">Selengkapnya</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 SC. Semua hak cipta dilindungi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle mobile navigation
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Add click effect on links
+        navLinks.addEventListener('click', function(e) {
+            const links = navLinks.querySelectorAll('a');
+            links.forEach(link => link.classList.remove('active'));
+            if (e.target.tagName === 'A') {
+                e.target.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

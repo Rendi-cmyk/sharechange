@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beragam Tipe Rumah</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .house {
+            display: flex;
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .house:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .house img {
+            width: 50%;
+            height: auto;
+        }
+        .house-content {
+            padding: 15px;
+            width: 50%;
+        }
+        h2 {
+            color: #2980b9;
+            margin: 0;
+            margin-bottom: 10px;
+        }
+        p {
+            text-align: justify;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .product-info {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+        .product-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .btn {
+            padding: 10px 15px;
+            background-color: #bee0f7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #1c598a;
+        }
+        .related-products {
+            margin-top: 30px;
+            border-top: 2px solid #ddd;
+            padding-top: 20px;
+            text-align: center;
+        }
+        .related-products h3 {
+            color: #2980b9;
+            margin-bottom: 20px;
+        }
+        .related-product {
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+            background: #f9f9f9;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .related-product:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="house">
+        <img src="House 12.jpg" alt="Foto Rumah Classic">
+        <div class="house-content">
+            <h2>Rumah Classic</h2>
+            <p>Terletak di Penggunugan Rumah Classic  yang dapat langsung dikenali dari desain bangunan dan juga interiornya. Dari segi bangunan, rumah dengan interior memiliki langit-langit yang tinggi dan memiliki pilar. Tidak sedikit yang layout-nya dibuat secara simetris. Hampir seluruh bagiannya dibubuhi detail artistik, baik itu berupa lukisan maupun ukiran dan molding.</p>
+            <div class="product-info">
+                <img class="product-img" src="Denah 3.jpeg" alt="Produk Rumah Classic">
+                <div>
+                    <p>Denah rumah Classic 14m x 20m ini mencakup ruang tamu, dapur, kamar tidur utama, kamar tidur anak, kamar tamu, 2 kamar mandi, garasi mobil dengan taman di depan.</p>
+                    <p>Harga: Rp 900.000.000</p>
+                    <button class="btn"><a href="https://wa.me/6283862443462?tekt=Hallo ,%20salam%20kenal">Hubungi Via Whatsapp</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

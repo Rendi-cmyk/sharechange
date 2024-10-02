@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic Home</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to CSS file -->
+</head>
+<body>
+    <div class="detail-container">
+        <h1>Classic Home</h1>
+        <img src="House_Classic.jpg" alt="Classic Home">
+        <p>A beautiful classic style home with modern amenities and a spacious garden.</p>
+        <p>Price: $500,000</p>
+        <button onclick="window.history.back()">Back to Search Results</button>
+    </div>
+
+    <style>
+        .detail-container {
+            max-width: 800px; /* Max width for detail page */
+            margin: 20px auto; /* Center the detail container */
+            padding: 20px;
+            text-align: center; /* Center text */
+            background: #fff; /* White background for details */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+        }
+
+        img {
+            width: 100%; /* Responsive image */
+            border-radius: 10px; /* Rounded corners for images */
+            margin-bottom: 15px; /* Space below image */
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #3498DB; /* Button color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px; /* Space above button */
+        }
+
+        button:hover {
+            background-color: #2980B9; /* Darker button color on hover */
+        }
+    </style>
+</body>
+</html>

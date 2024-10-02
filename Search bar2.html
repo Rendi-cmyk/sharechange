@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Page</title>
+    <!-- Anda bisa memindahkan CSS ini ke file eksternal seperti style.css untuk organisasi yang lebih baik -->
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center; /* Pusatkan secara horizontal */
+            align-items: center;    /* Pusatkan secara vertikal */
+            min-height: 100vh;      /* Pastikan body mengambil setidaknya tinggi viewport */
+            padding: 20px;
+        }
+
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px; /* Lebar maksimum untuk kontainer */
+            text-align: center; /* Pusatkan teks di dalam kontainer */
+        }
+
+        header h1 {
+            color: #3498DB;
+            margin-bottom: 20px;
+        }
+
+        .search-container {
+            position: relative; /* Untuk posisi saran */
+            width: 100%;
+            display: flex; /* Menggunakan Flexbox */
+            align-items: center; /* Vertikal tengah */
+        }
+
+        #searchInput {
+            padding: 10px;
+            flex: 1; /* Mengambil ruang yang tersedia */
+            border: 2px solid #2980B9; /* Warna border */
+            border-radius: 5px 0 0 5px; /* Sudut membulat */
+            outline: none;
+            font-size: 1em;
+        }
+
+        #searchButton {
+            padding: 10px 15px;
+            background-color: #2980B9; /* Warna tombol */
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0; /* Sudut membulat */
+            cursor: pointer;
+            transition: background-color 0.3s; /* Transisi halus */
+            font-size: 1em;
+        }
+
+        #searchButton:hover {
+            background-color: #1f6390; /* Warna tombol saat di-hover */
+        }
+
+        .suggestions-container {
+            max-height: 150px; /* Maksimum tinggi saran */
+            overflow-y: auto; /* Scroll vertikal jika perlu */
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none; /* Menghilangkan border atas agar menyatu dengan input */
+            border-radius: 0 0 5px 5px; /* Sudut membulat hanya bawah */
+            width: 100%;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 10; /* Agar saran muncul di atas elemen lain */
+            display: none; /* Sembunyikan secara default */
+        }
+
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee; /* Garis pemisah antar saran */
+            color: #333; /* Warna teks */
+            text-align: left; /* Teks rata kiri untuk saran */
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none; /* Hapus garis bawah pada item terakhir */
+        }
+
+        .suggestion-item:hover {
+            background-color: #f0f0f0; /* Sorot saat di-hover */
+        }
+
+        .results-container {
+            padding: 20px 0;
+            max-width: 800px; /* Lebar maksimum untuk hasil */
+            margin: 0 auto;
+            text-align: center; /* Pusatkan teks di dalam container */
+            width: 100%;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+            text-align: left; /* Teks rata kiri dalam kartu hasil */
+        }
+
+        .result-card a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .result-card:hover {
+            transform: scale(1.02);
+        }
+
+        .result-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .result-card h3 {
+            margin: 10px 0;
+            color: #2980B9; /* Warna judul */
+        }
+
+        .result-card p {
+            color: #666; /* Warna deskripsi */
+        }
+
+        .no-results {
+            color: #ff0000; /* Warna teks untuk tidak ada hasil */
+            font-size: 1.2em;
+        }
+
+        /* Responsif */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            #searchInput, #searchButton {
+                font-size: 0.9em;
+            }
+
+            .result-card {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Temukan Rumah Impian Anda</h1>
+        </header>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Cari Rumah..." autocomplete="off" aria-label="Cari Rumah">
+            <button id="searchButton" aria-label="Search">🔍</button>
+            <div id="suggestions" class="suggestions-container"></div> <!-- Container untuk saran -->
+        </div>
+        <div id="results" class="results-container"></div> <!-- Container untuk hasil pencarian -->
+    </div>
+
+    <script>
+        // Data simulasi untuk rumah
+        const homes = [
+            { 
+                title: "Rumah Minimalis", 
+                description: "Ciri khasnya adalah penggunaan ruang yang efisien dan elemen desain yang bersih.", 
+                link: "Selengkap.html",
+                image: "images/rumah_minimalis.jpg"
+            },
+            { 
+                title: "Rumah Sederhana", 
+                description: "Dengan arsitektur yang kaya dan desain yang beragam.", 
+                link: "se7.html",
+                image: "images/rumah_sederhana.jpg"
+            },
+            { 
+                title: "Rumah Tema Jepang", 
+                description: "Setiap elemen rumah dirancang untuk memenuhi fungsi tertentu dengan efisiensi maksimum.", 
+                link: "SELENGKAPNYA 3.html",
+                image: "images/rumah_modern.jpg"
+            },
+            { 
+                title: "Rumah Clasic", 
+                description: "Ciri khasnya adalah penggunaan ruang yang efisien dan elemen desain yang bersih.", 
+                link: "SELENGKAPNYA 2.html",
+                image: "images/rumah_clasic.jpg"
+            },
+            { 
+                title: "Rumah Kompeteporer", 
+                description: "Dengan arsitektur yang kaya dan desain yang beragam.", 
+                link: "selengkapnya 4.html",
+                image: "images/rumah_kompeteporer.jpg"
+            },
+            { 
+                title: "Rumah Modern Traditional", 
+                description: "Setiap elemen rumah dirancang untuk memenuhi fungsi tertentu dengan efisiensi maksimum.", 
+                link: "se8.html",
+                image: "images/rumah_mentari.jpg"
+            },
+            { 
+                title: "Rumah Ala-Pedesaan", 
+                description: "Setiap elemen rumah dirancang untuk memenuhi fungsi tertentu dengan efisiensi maksimum.", 
+                link: "selengkap2.html",
+                image: "images/rumah_mentari.jpg"
+            },
+            { 
+                title: "Rumah Good Modern", 
+                description: "Setiap elemen rumah dirancang untuk memenuhi fungsi tertentu dengan efisiensi maksimum.", 
+                link: "se0.html",
+                image: "images/rumah_mentari.jpg"
+            },
+        ];
+
+        const suggestionsContainer = document.getElementById('suggestions');
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        const resultsDiv = document.getElementById('results');
+
+        // Fungsi untuk menampilkan saran
+        function showSuggestions(suggestions) {
+            suggestionsContainer.innerHTML = ''; // Kosongkan saran sebelumnya
+            if (suggestions.length === 0) {
+                suggestionsContainer.style.display = 'none';
+                return;
+            }
+
+            suggestions.forEach(home => {
+                const suggestionElement = document.createElement('div');
+                suggestionElement.innerText = home.title; // Tampilkan judul rumah
+                suggestionElement.classList.add('suggestion-item');
+                suggestionElement.onclick = () => {
+                    window.location.href = home.link; // Arahkan ke halaman rumah
+                };
+                suggestionsContainer.appendChild(suggestionElement);
+            });
+            suggestionsContainer.style.display = 'block';
+        }
+
+        // Fungsi untuk melakukan pencarian
+        function performSearch(query) {
+            resultsDiv.innerHTML = ''; // Kosongkan hasil pencarian sebelumnya
+
+            const filteredHomes = homes.filter(home => 
+                home.title.toLowerCase().includes(query) || 
+                home.description.toLowerCase().includes(query)
+            );
+
+            if (filteredHomes.length === 0) {
+                resultsDiv.innerHTML = `<p class="no-results">Oops! Tidak ada hasil untuk "<strong>${query}</strong>".</p>`;
+            } else {
+                filteredHomes.forEach(home => {
+                    resultsDiv.innerHTML += `
+                        <div class="result-card">
+                            <a href="${home.link}">
+                                <img src="${home.image}" alt="${home.title}">
+                                <h3>${home.title}</h3>
+                                <p>${home.description}</p>
+                            </a>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        // Event listener untuk input di kotak pencarian
+        searchInput.addEventListener('input', function() {
+            const query = searchInput.value.trim().toLowerCase();
+            if (query === '') {
+                suggestionsContainer.style.display = 'none';
+                return;
+            }
+
+            const suggestions = homes.filter(home => home.title.toLowerCase().includes(query));
+            showSuggestions(suggestions);
+        });
+
+        // Event listener untuk klik tombol pencarian
+        searchButton.addEventListener('click', function() {
+            const query = searchInput.value.trim().toLowerCase();
+            if (query !== '') {
+                performSearch(query);
+                suggestionsContainer.style.display = 'none';
+            }
+        });
+
+        // Event listener untuk tekan tombol "Enter" pada input pencarian
+        searchInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Mencegah perilaku default
+                const query = searchInput.value.trim().toLowerCase();
+                if (query !== '') {
+                    // Mencoba menemukan kecocokan tepat
+                    const matchedHome = homes.find(home => home.title.toLowerCase() === query);
+                    if (matchedHome) {
+                        window.location.href = matchedHome.link; // Arahkan jika kecocokan tepat ditemukan
+                    } else {
+                        performSearch(query); // Lakukan pencarian umum jika tidak ada kecocokan tepat
+                    }
+                    suggestionsContainer.style.display = 'none';
+                }
+            }
+        });
+
+        // Klik di luar untuk menutup saran
+        document.addEventListener('click', function(event) {
+            if (!searchInput.contains(event.target) && !suggestionsContainer.contains(event.target)) {
+                suggestionsContainer.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
